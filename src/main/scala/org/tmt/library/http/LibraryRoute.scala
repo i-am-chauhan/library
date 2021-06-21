@@ -12,20 +12,15 @@ class LibraryRoute(libraryService: LibraryService)(implicit
 ) extends HttpCodecs {
 
   def route: Route = {
-    post {
-      path("books" / "create") {
+    path("books") {
+      post {
         entity(as[Request]) {
           case InsertBook(title, authorName) =>
             complete(libraryService.insertBook(title, authorName))
         }
-      }
-    } ~
-    get {
-      path("books") {
-        complete(libraryService.getBooks)
       } ~
-      path("books" / Segment) { bookTitle =>
-        complete(libraryService.getBooks(bookTitle))
+      get {
+        complete(libraryService.getBooks)
       }
     }
   }

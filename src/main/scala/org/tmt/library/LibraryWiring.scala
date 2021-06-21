@@ -20,11 +20,16 @@ class LibraryWiring(val port: Option[Int]) extends ServerWiring {
   import actorRuntime.ec
 
   private lazy val databaseServiceFactory = new DatabaseServiceFactory(actorRuntime.typedSystem)
-  private val dbName = "postgres"
+  private val dbName                      = settings.config.getString("dbName")
+  private val dbUsernameHolder            = settings.config.getString("dbUsernameHolder")
+  private val dbPasswordHolder            = settings.config.getString("dbPasswordHolder")
   private lazy val dslContext: DSLContext =
-    Await.result(databaseServiceFactory.makeDsl(cswServices.locationService, dbName), 10.seconds)
+    Await.result(
+      databaseServiceFactory.makeDsl(cswServices.locationService, dbName, dbUsernameHolder, dbPasswordHolder),
+      10.seconds
+    )
 
   logger.info(s"Successfully connected to the database ${dbName} and stared the server")
-  private lazy val libraryImpl = new LibraryImpl(dslContext)
+  private lazy val libraryImpl    = new LibraryImpl(dslContext)
   override lazy val routes: Route = new LibraryRoute(libraryImpl).route
 }

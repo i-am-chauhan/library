@@ -24,6 +24,6 @@ enablePlugins(FlywayPlugin)
 flywayUrl := "jdbc:postgresql://localhost:5432/postgres"
 flywayUser := "postgres"
 flywayPassword := "postgres"
-flywayLocations += "db/migration1"
+flywayLocations += "db/migration"
 flywayBaselineOnMigrate := true
 flywayBaselineVersion := "0"

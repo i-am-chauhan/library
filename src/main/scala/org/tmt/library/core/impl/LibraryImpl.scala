@@ -11,13 +11,10 @@ import scala.concurrent.{ExecutionContext, Future}
 class LibraryImpl(dsl: DSLContext)(implicit ec: ExecutionContext) extends LibraryService {
   override def getBooks: Future[List[Book]] = dsl.resultQuery("SELECT * from BOOKS").fetchAsyncScala[Book]
 
-  override def getBooks(title: String): Future[List[Book]] =
-    dsl.resultQuery(s"SELECT * from BOOKS WHERE UPPER(title) LIKE UPPER('$title%')").fetchAsyncScala[Book]
-
   override def insertBook(title: String, author: String): Future[String] = {
     val id = UUID.randomUUID().toString
     dsl
-      .query(s"INSERT INTO BOOKS (id, title, author, available) values ('$id', '$title', '$author', TRUE)")
+      .query(s"INSERT INTO BOOKS (id, title, author, available) values (?, ?, ?, ?)",id, title, author, true)
       .executeAsyncScala()
       .map(_ => id)
   }

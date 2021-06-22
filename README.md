@@ -84,7 +84,7 @@ This template provides an implementation that matches the example routes. If Jav
 can be added as shown in [JLibraryImpl](./src/main/java/org/tmt/library/core/JLibraryImpl.java). In this case, a Scala
 is required, as shown in [JLibraryImplWrapper](./src/main/scala/org/tmt/library/http/JLibraryImplWrapper.scala)
 
-* Core models for supporting the APIs should be added in the [models](./src/main/scala/org/tmt/library/core/models) package.
+* Core models for supporting the APIs should be added in the [models](src/main/scala/org/tmt/library/models) package.
 Codecs for these models should be added in [HttpCodecs](./src/main/scala/org/tmt/library/http/HttpCodecs.scala).
 
 * [LibraryWiring](./src/main/scala/org/tmt/library/LibraryWiring.scala) is where the implementation wired up with the routes.

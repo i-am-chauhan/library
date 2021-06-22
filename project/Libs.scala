@@ -11,4 +11,5 @@ object Libs {
   val `embedded-keycloak`        = "com.github.tmtsoftware.embedded-keycloak" %% "embedded-keycloak"        % "0.2.0"
   val `mockito-scala`            = "org.mockito"                              %% "mockito-scala"            % "1.16.0"
   val `scalatest`                = "org.scalatest"                            %% "scalatest"                % "3.2.2"
+  val `otj-pg-embedded`          = "com.opentable.components"                 % "otj-pg-embedded"           % "0.13.3"
 }

@@ -1,6 +1,6 @@
-package org.tmt.library.core.service
+package org.tmt.library.service
 
-import org.tmt.library.core.models.Book
+import org.tmt.library.models.Book
 
 import scala.concurrent.Future
 

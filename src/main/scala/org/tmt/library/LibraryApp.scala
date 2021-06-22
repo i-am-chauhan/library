@@ -7,7 +7,7 @@ import esw.http.template.wiring.ServerApp
 import org.tmt.library.LibraryAppCommand.StartCommand
 
 object LibraryApp extends ServerApp[LibraryAppCommand] {
-  override def appName: String    = getClass.getSimpleName.dropRight(1)
+  override def appName: String = getClass.getSimpleName.dropRight(1)
 
   override def run(command: LibraryAppCommand, remainingArgs: RemainingArgs): Unit =
     command match {

@@ -10,6 +10,6 @@ object HttpCodecs extends HttpCodecs
 
 trait HttpCodecs extends AkkaHttpCompat with LocationCodecs {
 
-  implicit lazy val bookCodec: Codec[Book]          = MapBasedCodecs.deriveCodec
-  implicit lazy val requestCodec: Codec[Request]    = MapBasedCodecs.deriveAllCodecs
+  implicit lazy val bookCodec: Codec[Book]              = MapBasedCodecs.deriveCodec
+  implicit lazy val requestCodec: Codec[LibraryRequest] = MapBasedCodecs.deriveAllCodecs
 }

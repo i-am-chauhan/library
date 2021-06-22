@@ -8,7 +8,6 @@ resolvers += "jitpack" at "https://jitpack.io"
 resolvers += "bintray" at "https://jcenter.bintray.com"
 fork := true
 run / javaOptions += "-Dcsw-networks.hostname.automatic=on"
-envVars in Test := Map("DB_READ_USERNAME" -> "postgres", "DB_READ_PASSWORD" -> "postgres")
 
 libraryDependencies ++= Seq(
   Libs.`esw-http-template-wiring` % "compile->compile;test->test",

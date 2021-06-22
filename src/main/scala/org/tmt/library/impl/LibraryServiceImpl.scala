@@ -14,7 +14,7 @@ class LibraryServiceImpl(dsl: DSLContext)(implicit ec: ExecutionContext) extends
   override def insertBook(title: String, author: String): Future[String] = {
     val id = UUID.randomUUID().toString
     dsl
-      .query(s"INSERT INTO BOOKS (id, title, author, available) values (?, ?, ?, ?)",id, title, author, true)
+      .query(s"INSERT INTO BOOKS (id, title, author, available) values (?, ?, ?, ?)", id, title, author, true)
       .executeAsyncScala()
       .map {
         case x if x < 0 => throw new RuntimeException(s"Failed to insert the book $title")

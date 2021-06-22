@@ -8,9 +8,9 @@ object LibraryAppCommand {
 
   @CommandName("start")
   final case class StartCommand(
-     @HelpMessage("port of the app")
-     @ExtraName("p")
-     port: Option[Int]
-   ) extends LibraryAppCommand
+      @HelpMessage("port of the app")
+      @ExtraName("p")
+      port: Option[Int]
+  ) extends LibraryAppCommand
 
 }

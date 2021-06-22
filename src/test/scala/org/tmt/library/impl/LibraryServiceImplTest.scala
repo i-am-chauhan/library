@@ -5,12 +5,10 @@ import com.opentable.db.postgres.embedded.EmbeddedPostgres
 import csw.database.DBTestHelper
 import csw.database.scaladsl.JooqExtentions.{RichQuery, RichResultQuery}
 import org.jooq.DSLContext
-import org.mockito.MockitoSugar
 import org.scalatest.BeforeAndAfterAll
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpecLike
-import org.tmt.library.http.HttpCodecs
 import org.tmt.library.models.Book
 import org.tmt.library.service.LibraryService
 
@@ -18,13 +16,7 @@ import java.util.UUID
 import scala.concurrent.ExecutionContext
 import scala.concurrent.duration.DurationInt
 
-class LibraryServiceImplTest
-    extends AnyWordSpecLike
-    with Matchers
-    with ScalaFutures
-    with MockitoSugar
-    with BeforeAndAfterAll
-    with HttpCodecs {
+class LibraryServiceImplTest extends AnyWordSpecLike with Matchers with ScalaFutures with BeforeAndAfterAll {
 
   private val system: ActorSystem[SpawnProtocol.Command] = ActorSystem(SpawnProtocol(), "test")
 
@@ -74,8 +66,7 @@ class LibraryServiceImplTest
     }
 
     "insert the given book in the BOOKS table in the postgres database" in {
-
-      val title      = "A brief history of time"
+      val title  = "A brief history of time"
       val author = "Stephan Hawking"
 
       libraryService.insertBook(title, author).futureValue

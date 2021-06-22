@@ -25,8 +25,8 @@ cs install csw-services:v3.0.0-M1
 csw-services start -d
 ```
 
-* We depend upon some environment variables to pick up username and password for the database, thus `DB_USER` and
-  `DB_PASSWORD` need to be set. To set environment variables, use the command `export DB_USER=<VALUE> DB_PASSWORD=<VALUE>`
+* We depend upon some environment variables to pick up username and password for the database, thus `DB_USERNAME` and
+  `DB_PASSWORD` need to be set. To set environment variables, use the command `export DB_USERNAME=<VALUE> DB_PASSWORD=<VALUE>`
   
 * The database name is picked up from the application.conf and is set to `postgres`. 
 
@@ -70,7 +70,7 @@ run `sbt "run start -p <port number>`
 │   │   └── scala
 ```
 
-* The routes can be added in [LibraryRoute](./src/main/scala/org/tmt/library/http/LibraryRoute.scala).
+* The routes can be added in [LibraryRoute](src/main/scala/org/tmt/library/http/LibraryRoutes.scala).
 Some example routes have been provided.
   
 * The API implementation can be added in [LibraryImpl](./src/main/scala/org/tmt/library/core/LibraryImpl.scala).

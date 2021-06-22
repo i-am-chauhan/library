@@ -9,25 +9,38 @@ The build is based on sbt and depends on libraries generated from the
 [ESW](https://github.com/tmtsoftware/esw) project.
 
 See [here](https://www.scala-sbt.org/1.0/docs/Setup.html) for instructions on installing sbt.
+## About
+
+This application is an example of accessing the database service using jooq DSLContext. Here we take an example of a 
+simple library management system with functionality to list all the books in the library and to enter a book in the library.
 
 ## Prerequisites for Running App
 
-We recommend using coursier for installing and running the apps. Steps for installing coursier are documented 
-[here](https://tmtsoftware.github.io/csw/apps/csinstallation.html) 
-
-The CSW AAS Service needs to be running before starting the components.
-Follow below instructions to run AAS:
+* We recommend using coursier for installing and running the apps. Steps for installing coursier are documented 
+[here](https://tmtsoftware.github.io/csw/apps/csinstallation.html). The CSW Database Service needs to be running before starting the App.
+Follow below instructions to run database service:
 
 ```
 cs install csw-services:v3.0.0-M1
-csw-services start --auth
+csw-services start -d
 ```
 
-**Note**: `csw-services` version should be compatible with the `ESW` version specified in [Libs.scala](project/Libs.scala). 
-You can refer the ESW to CSW version compatibility table [here](https://github.com/tmtsoftware/esw/blob/master/README.md).
+* We depend upon some environment variables to pick up username and password for the database, thus `DB_USER` and
+  `DB_PASSWORD` need to be set. To set environment variables, use the command `export DB_USER=<VALUE> DB_PASSWORD=<VALUE>`
+  
+* The database name is picked up from the application.conf and is set to `postgres`. 
 
-This will start AAS.
-You can run `csw-services start --help` to get more information.
+* This application performs fetch and insert queries on the `BOOKS` table in the database, thus it needs to be present. 
+  Following command can be used to create table.
+  ```bash
+  CREATE TABLE BOOKS(
+                      id TEXT PRIMARY KEY     NOT NULL,
+                      title           TEXT    NOT NULL,
+                      author            TEXT     NOT NULL,
+                      available BOOLEAN NOT NULL
+  );
+  ```
+
 
 ## Running the App
 
@@ -36,10 +49,11 @@ Before we start the app we need to set the following environment variables:
 
 To set environment variables, use the command `export <ENV_VAR> = <VALUE>`
 
-By default, an interface name will be selected for you.  However, if you are having problems or have more than a single network interface, you may need to set
-the environment variables `INTERFACE_NAME` and `PUBLIC_INTERFACE_NAME` explicitly.  For development, these two variables 
-can be set to the primary machine 
-interface name. For example, `en0`.  See the CSW documentation on [Network Topology](http://tmtsoftware.github.io/csw/deployment/network-topology.html) for more information.
+By default, an interface name will be selected for you.  However, if you are having problems or have more than a single 
+network interface, you may need to set the environment variables `INTERFACE_NAME` and `AAS_INTERFACE_NAME` explicitly. 
+For development, these two variables can be set to the primary machine interface name. For example, `en0`.  See the 
+CSW documentation on [Network Topology](http://tmtsoftware.github.io/csw/deployment/network-topology.html) for more
+information.
 
 To start the app, run:
 `sbt "run start"`
@@ -48,41 +62,19 @@ This will start the app with default port 8080.
 If you want to start the app at custom port,
 run `sbt "run start -p <port number>`
 
-You can verify whether the application has started successfully by using the endpoint in `apptest.http` (e.g. using `curl` or a tool like [postman](https://www.postman.com/)).
-
-NOTE: `<host>` needs to be replaced by the host address where app is running. Port also needs to be changed 
-if custom one is used.
-
 ## How to Use the Project
 ```bash
 .
 ├── src
 │   ├── main
-│   │   ├── java
 │   │   └── scala
 ```
-* The template generates implementations for both Java and Scala. Both are not required to develop the app. 
-After you choose which language you want to develop in, you can delete the other. We encourage you to use Scala! 
-It has good support for asynchronous programming.
 
 * The routes can be added in [LibraryRoute](./src/main/scala/org/tmt/library/http/LibraryRoute.scala).
 Some example routes have been provided.
-
-* For adding a new authorization policy to your routes, the policy must be added to `securityDirectives` while defining the route.
-For example, if you want to add policy such that only `esw-admin` should be able to access some route, then it could be done as shown
-in below snippet. More information about authorization policies can be found in the  [AAS documentation](https://tmtsoftware.github.io/csw/services/aas/csw-aas-http.html#authorization-policies).
-```
-   path("endpoint") {
-        securityDirectives.sPost(RealmRolePolicy("Esw-admin")) {
-            // process request
-        }
-   }
-```
-
+  
 * The API implementation can be added in [LibraryImpl](./src/main/scala/org/tmt/library/core/LibraryImpl.scala).
-This template provides an implementation that matches the example routes. If Java is your preferred language, then the implementation
-can be added as shown in [JLibraryImpl](./src/main/java/org/tmt/library/core/JLibraryImpl.java). In this case, a Scala
-is required, as shown in [JLibraryImplWrapper](./src/main/scala/org/tmt/library/http/JLibraryImplWrapper.scala)
+This template provides an implementation that matches the example routes.
 
 * Core models for supporting the APIs should be added in the [models](src/main/scala/org/tmt/library/models) package.
 Codecs for these models should be added in [HttpCodecs](./src/main/scala/org/tmt/library/http/HttpCodecs.scala).

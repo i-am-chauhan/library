@@ -25,7 +25,7 @@ class LibraryWiring(val port: Option[Int] = None) extends ServerWiring {
       10.seconds
     )
 
-  logger.info(s"Successfully connected to the database ${dbName} and stared the server")
+  logger.info(s"Successfully connected to the database $dbName and stared the server")
   private lazy val libraryImpl    = new LibraryServiceImpl(dslContext)
   override lazy val routes: Route = new LibraryRoutes(libraryImpl).routes
 }

@@ -52,7 +52,7 @@ class LibraryServiceImplTest extends AnyWordSpecLike with Matchers with ScalaFut
 
   "LibraryService" must {
 
-    "get all the books present from the BOOKS table in the postgres database" in {
+    "get all the books present from the BOOKS table in the postgres database | ESW-196" in {
       val insertQueryStr =
         s"""
          |INSERT INTO books (id, title, author, available)
@@ -65,7 +65,7 @@ class LibraryServiceImplTest extends AnyWordSpecLike with Matchers with ScalaFut
       libraryService.getBooks.futureValue.toSet should ===(Set(book1, book2))
     }
 
-    "insert the given book in the BOOKS table in the postgres database" in {
+    "insert the given book in the BOOKS table in the postgres database | ESW-196" in {
       val title  = "A brief history of time"
       val author = "Stephan Hawking"
 

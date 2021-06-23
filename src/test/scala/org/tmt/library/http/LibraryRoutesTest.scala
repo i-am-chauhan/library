@@ -25,7 +25,7 @@ class LibraryRoutesTest
     with HttpCodecs {
 
   private val libraryService: LibraryService = mock[LibraryService]
-  private val routes = new LibraryRoutes(libraryService).routes
+  private val routes                         = new LibraryRoutes(libraryService).routes
 
   "LibraryRoutes" must {
     "be able to insert a new book in the library service | ESW-196" in {

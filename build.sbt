@@ -23,7 +23,7 @@ libraryDependencies ++= Seq(
 
 enablePlugins(FlywayPlugin)
 // flyway settings
-flywayUrl := "jdbc:postgresql://localhost:5432/library"
+flywayUrl := "jdbc:postgresql://localhost:5432/postgres"
 flywayUser := "postgres"
 flywayPassword := "postgres"
 flywayLocations += "db/migration"
